@@ -1,14 +1,14 @@
 import { slugify } from '../lib/format'
 import { xhrGet } from './xhr'
-import { getApiKey, PROVIDER_ENDPOINT, toWeatherError } from './weatherApi'
+import { PROXY_ENDPOINT, toWeatherError } from './weatherApi'
 
-/** City lookup through WeatherAPI's search endpoint, sent with the same XHR helper as the weather. */
+/** City lookup through the same proxy and the same XHR helper as the weather. */
 export async function searchCities(query, signal) {
   const q = query.trim()
   if (q.length < 3) return []
-  const params = new URLSearchParams({ key: getApiKey(), q })
+  const params = new URLSearchParams({ q })
   try {
-    const results = await xhrGet(`${PROVIDER_ENDPOINT}/search.json?${params.toString()}`, { signal })
+    const results = await xhrGet(`${PROXY_ENDPOINT}/search.json?${params.toString()}`, { signal })
     if (!Array.isArray(results)) return []
     return results
       .filter((p) => typeof p?.name === 'string' && typeof p.lat === 'number' && typeof p.lon === 'number')

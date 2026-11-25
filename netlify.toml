@@ -5,6 +5,17 @@
 [build.environment]
   NODE_VERSION = "22"
 
+[functions]
+  directory = "netlify/functions"
+
+# Weather requests go to the serverless function, which adds the API key.
+[[redirects]]
+  from = "/api/weather/*"
+  to = "/.netlify/functions/weather/:splat"
+  status = 200
+  force = true
+
+# Every other path is a page of the single-page app.
 [[redirects]]
   from = "/*"
   to = "/index.html"

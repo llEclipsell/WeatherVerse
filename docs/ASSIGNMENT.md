@@ -11,7 +11,7 @@ Use this as the script for the demonstration. Every line points at the file to o
 | Promise.allSettled / Promise.race | `src/hooks/useCitySelection.js` | Weather request and city photograph load independently; one failing does not block the other. |
 | JSON parsing | `src/services/xhr.js` | `JSON.parse(xhr.responseText)` with invalid JSON handled. |
 | JSON manipulation | `src/services/weatherNormaliser.js` | Flattens forecast days into hourly and daily lists, converts time formats, de-duplicates alerts, keeps missing values as `null`. |
-| Public weather API | `src/services/weatherApi.js` | WeatherAPI.com `forecast.json`: one request returns current, forecast and alerts. |
+| Public weather API | `src/services/weatherApi.js`, `server/weatherProxy.mjs` | WeatherAPI.com `forecast.json`: one request returns current, forecast and alerts. The browser's XHR goes to `/api/weather`; a server-side proxy adds the API key so it is never exposed. |
 | Current weather | `src/components/city/CityStory.jsx`, `src/components/dashboard/CurrentWeather.jsx`, `WeatherDetails.jsx` | Story chapter 1 and the "in detail" panel. |
 | Multi-day forecast | `src/components/dashboard/MultiDayForecast.jsx`, `HourlyForecast.jsx` | Title shows how many days the API plan returned. |
 | Weather alerts | `src/components/dashboard/WeatherAlerts.jsx` | Four separate states: alerts shown, none active, not included in plan, request failed. |
@@ -24,7 +24,7 @@ Use this as the script for the demonstration. Every line points at the file to o
 
 ## Quick error demonstrations
 
-1. Remove the key from `.env.local` and restart: the page says the key is missing.
+1. Remove `WEATHERAPI_KEY` from `.env.local` and restart: the page says no key is set on the server.
 2. Put a wrong key: "The WeatherAPI key was rejected" (HTTP 401/403 handled, not treated as success).
 3. DevTools > Network > Offline, pick a city: "Could not reach the weather service", alerts section says the request failed.
 4. Block location permission and press "Use my location": the denial message appears and search still works.

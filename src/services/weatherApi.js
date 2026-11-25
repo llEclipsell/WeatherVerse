@@ -2,11 +2,12 @@ import { xhrGet, XhrError } from './xhr'
 import { InvalidWeatherResponse, normaliseWeatherResponse } from './weatherNormaliser'
 
 /**
- * Weather provider: WeatherAPI.com.
+ * Weather provider: WeatherAPI.com, reached through our own proxy at /api/weather.
+ * The proxy (server/weatherProxy.mjs) adds the API key on the server, so the key is never in the browser.
  * One forecast.json request returns current conditions, the multi-day forecast and alerts,
  * so there is exactly one XHR per city (no duplicate requests).
  */
-export const PROVIDER_ENDPOINT = 'https://api.weatherapi.com/v1'
+export const PROXY_ENDPOINT = '/api/weather'
 const FORECAST_DAYS = 7 // The API returns as many of these as the key's plan allows (3 on the free plan).
 
 export class WeatherError extends Error {
@@ -17,30 +18,18 @@ export class WeatherError extends Error {
   }
 }
 
-export function getApiKey() {
-  const key = import.meta.env.VITE_WEATHERAPI_KEY?.trim()
-  if (!key) {
-    throw new WeatherError(
-      'config',
-      'No WeatherAPI key is set. Copy .env.example to .env.local, paste your key, and restart the dev server.',
-    )
-  }
-  return key
-}
-
 export function isValidCoordinate(lat, lon) {
   return Number.isFinite(lat) && Number.isFinite(lon) && Math.abs(lat) <= 90 && Math.abs(lon) <= 180
 }
 
 function buildWeatherUrl(lat, lon) {
   const params = new URLSearchParams({
-    key: getApiKey(),
     q: `${lat.toFixed(4)},${lon.toFixed(4)}`,
     days: String(FORECAST_DAYS),
     alerts: 'yes',
     aqi: 'no',
   })
-  return `${PROVIDER_ENDPOINT}/forecast.json?${params.toString()}`
+  return `${PROXY_ENDPOINT}/forecast.json?${params.toString()}`
 }
 
 /** Maps a failed XHR to a message a person can act on. Aborts pass through untouched. */
@@ -62,8 +51,17 @@ export function toWeatherError(err) {
   const body = err.body
   const code = body?.error?.code
   const detail = body?.error?.message
+  if (code === 'proxy-no-key') {
+    return new WeatherError(
+      'config',
+      'No WeatherAPI key is set on the server. Add WEATHERAPI_KEY to .env.local (or to the Netlify site settings).',
+    )
+  }
+  if (code === 'proxy-upstream') {
+    return new WeatherError('network', 'The weather service could not be reached. Try again in a moment.')
+  }
   if (code === 1002 || code === 2006 || code === 2008 || err.status === 401) {
-    return new WeatherError('auth', 'The WeatherAPI key was rejected. Check VITE_WEATHERAPI_KEY in .env.local.')
+    return new WeatherError('auth', 'The WeatherAPI key was rejected. Check WEATHERAPI_KEY in .env.local or the Netlify site settings.')
   }
   if (code === 2007 || code === 2009) {
     return new WeatherError('quota', detail ?? 'The WeatherAPI plan limit was reached for this key.')

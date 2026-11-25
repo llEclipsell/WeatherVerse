@@ -13,9 +13,28 @@ a pinned scroll story driven by live conditions, and a plain forecast section.
 
 `npm run build` builds into dist/. Needs Node 20 or newer.
 
-Get a free key at https://www.weatherapi.com/. The key is read from `VITE_WEATHERAPI_KEY`.
-`.env.local` is git-ignored. A key used in browser code is visible to visitors, so for a public
-deployment put a small server-side proxy in front of the API.
+Get a free key at https://www.weatherapi.com/ and put it in `.env.local` as `WEATHERAPI_KEY`.
+`.env.local` is git-ignored.
+
+### How the key stays private
+
+The browser never sees the key. Every request goes, by XMLHttpRequest, to our own path
+`/api/weather/forecast.json` or `/api/weather/search.json`. A small proxy
+(`server/weatherProxy.mjs`) adds the key on the server and forwards the request to WeatherAPI.com.
+It only forwards those two endpoints and their known parameters.
+
+- On your machine, `npm run dev` and `npm run preview` run the proxy inside the Vite server
+  (`vite.config.js`), reading `WEATHERAPI_KEY` from `.env.local`.
+- On Netlify, `netlify/functions/weather.mjs` runs the same proxy as a serverless function.
+  `netlify.toml` routes `/api/weather/*` to it.
+
+## Deploy to Netlify
+
+1. Push to GitHub and import the repository in Netlify. Build settings come from `netlify.toml`.
+2. In Site configuration > Environment variables, add `WEATHERAPI_KEY` with your key.
+   Do not name it `VITE_...`: that prefix is what puts a variable into the browser bundle.
+3. Deploy. Check that a city loads, that refreshing `/city/tokyo` works, and in DevTools > Network
+   that the requests go to `/api/weather/...` with no `key=` in the address.
 
 For the assignment walkthrough (XHR, Promises, async/await, JSON, geolocation, alerts) see
 `docs/ASSIGNMENT.md`.
@@ -106,6 +125,8 @@ Use `position` in `cityImages.js` (CSS object-position) if a crop cuts off the s
       pages/        ExplorePage, CityPage
       services/     xhr, weatherApi, weatherNormaliser, geocodingApi, geolocation, cities, cityImages
       store/        weatherStore (Zustand)
+    server/         weatherProxy.mjs - adds the API key on the server side
+    netlify/        functions/weather.mjs - the proxy as a Netlify Function
     assets-src/     untouched original textures (not served)
     scripts/        fetch-city-images, build-textures, check-geo
 
