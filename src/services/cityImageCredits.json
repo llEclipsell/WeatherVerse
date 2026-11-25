@@ -1,0 +1,77 @@
+{
+  "london": {
+    "credit": "User:Colin and Kim Hansen",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:City_of_London_skyline_from_London_City_Hall_-_Sept_2015_-_Crop_Aligned.jpg"
+  },
+  "paris": {
+    "credit": "Pedro Kümmel pedrokummel",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Eiffel_Tower_sunset_skyline_(Unsplash).jpg"
+  },
+  "reykjavik": {
+    "credit": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Vista_de_Reikiavik_desde_Perlan,_Distrito_de_la_Capital,_Islandia,_2014-08-13,_DD_118-120_HDR.JPG"
+  },
+  "new-york": {
+    "credit": "Percival Kestreltail",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lower_Manhattan,_New_York_skyline_from_Liberty_Island_2021.jpg"
+  },
+  "san-francisco": {
+    "credit": "Dietmar Rabich",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:San_Francisco_(CA,_USA),_Fisherman%27s_Wharf_Parking_Garage,_Skyline_--_2022_--_151006.jpg"
+  },
+  "rio-de-janeiro": {
+    "credit": "Halley Pacheco de Oliveira",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Enseada_de_Botafogo_vista_do_P%C3%A3o_de_A%C3%A7%C3%BAcar.jpg"
+  },
+  "cape-town": {
+    "credit": "Daniel Case",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cape_Town_City_Bowl_and_Table_Mountain_at_dawn.jpg"
+  },
+  "cairo": {
+    "credit": "Vyacheslav Argenberg",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Cairo_skyline,_Panoramic_view,_Egypt.jpg"
+  },
+  "dubai": {
+    "credit": "Tim Reckmann from Hamm, Deutschland",
+    "license": "CC BY 2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dubai_Skyline_mit_Burj_Khalifa_(18241030269).jpg"
+  },
+  "mumbai": {
+    "credit": "A.Savin",
+    "license": "FAL",
+    "source": "https://commons.wikimedia.org/wiki/File:Mumbai_03-2016_10_skyline_of_Lotus_Colony.jpg"
+  },
+  "bengaluru": {
+    "credit": "SlowPhoton",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Skyline_of_Varthur,_Bangalore.jpg"
+  },
+  "hyderabad": {
+    "credit": "Nikhilb239",
+    "license": "CC BY 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Birla_Mandir_Remote_View_050402015.jpg"
+  },
+  "singapore": {
+    "credit": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Skyline,_Marina_Bay,_Singapur,_2023-08-17,_DD_20.jpg"
+  },
+  "tokyo": {
+    "credit": "David Kernan",
+    "license": "CC BY 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Minato_City,_Tokyo,_Japan.jpg"
+  },
+  "sydney": {
+    "credit": "Dietmar Rabich",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sydney_(AU),_Opera_House_--_2019_--_2130.jpg"
+  }
+}
